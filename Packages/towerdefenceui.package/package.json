@@ -1,0 +1,8 @@
+{
+    "name": "com.setu.towerdefenceui",
+    "version": "1.0.0",
+    "displayName": "Tower Defence UI",
+    "description": "A custom Unity package for my game.",
+    "unity": "6000.0",
+    "dependencies": {}
+  }
