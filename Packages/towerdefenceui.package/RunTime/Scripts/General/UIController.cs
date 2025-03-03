@@ -1,31 +1,68 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using System.Collections;
 
-public class UIController : MonoBehaviour
+public class UIGeneralController : MonoBehaviour
 {
-    public static void ToggleExitGame()
+    private static UIGeneralController _instance;
+
+    private void Awake()
     {
-        #if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false; // Stop play mode in the Unity Editor
-        #else
-        Application.Quit(); // Quit the application in a built game
-        #endif
+        if (_instance == null)
+        {
+            _instance = this;
+        }
+        else
+        {
+            Destroy(gameObject); // Prevent duplicate instances
+        }
     }
 
-    public static IEnumerator WaitForAnimation(string animation, Animator animator)
+    public static void ToggleExitGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+    }
+
+    // Non-static coroutine function
+    private IEnumerator WaitForAnimationCoroutine(string animation, Animator animator)
     {
         animator.Play(animation);
-        yield return null;
+        yield return null; // Wait for one frame
 
         float animationLength = animator.GetCurrentAnimatorStateInfo(0).length;
         yield return new WaitForSeconds(animationLength);
     }
 
-    public void ToggleGameOverUI()
+    // Static method to be used in other classes
+    public static IEnumerator WaitForAnimation(string animation, Animator animator)
     {
-        CanvasGroupController.EnableGroup(gameLoseUI);
-        StartCoroutine(WaitForAnimation("Open", gameLoseUI.GetComponent<Animator>()));
+        if (_instance != null)
+        {
+            yield return _instance.StartCoroutine(_instance.WaitForAnimationCoroutine(animation, animator));
+        }
+        else
+        {
+            Debug.LogError("UIGeneralController instance is missing in the scene. Add it to a GameObject.");
+        }
+    }
+
+    public static void ToggleUI(CanvasGroup group)
+    {
+        CanvasGroupController.EnableGroup(group);
+
+        if (_instance != null)
+        {
+            _instance.StartCoroutine(_instance.WaitForAnimationCoroutine("Open", group.GetComponent<Animator>()));
+        }
+        else
+        {
+            Debug.LogError("UIGeneralController instance is missing in the scene. Add it to a GameObject.");
+        }
     }
 }
+
+
+

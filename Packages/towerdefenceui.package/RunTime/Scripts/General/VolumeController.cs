@@ -9,8 +9,6 @@ public class VolumeController : MonoBehaviour
     {
         volumeSlider.value = UniversalSettings.Instance.GetVolume();
 
-        Debug.Log(volumeSlider.value);
-
         volumeSlider.onValueChanged.AddListener(UniversalSettings.Instance.SetVolume);
     }
 }

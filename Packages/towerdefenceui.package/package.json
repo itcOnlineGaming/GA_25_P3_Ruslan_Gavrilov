@@ -4,5 +4,7 @@
     "displayName": "Tower Defence UI",
     "description": "A custom Unity package for my game.",
     "unity": "6000.0",
-    "dependencies": {}
+    "dependencies": {
+      "com.unity.textmeshpro": "3.0.9"
+    }
   }

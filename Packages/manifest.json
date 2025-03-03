@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.setu.towerdefenceui": "https://github.com/itcOnlineGaming/GA_25_P3_Ruslan_Gavrilov.git?path=/Packages/towerdefenceui.package",
     "com.unity.ai.navigation": "2.0.5",
     "com.unity.collab-proxy": "2.7.1",
     "com.unity.ide.rider": "3.0.31",
