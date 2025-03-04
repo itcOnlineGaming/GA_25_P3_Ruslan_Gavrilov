@@ -36,19 +36,6 @@ public class UIGeneralController : MonoBehaviour
         yield return new WaitForSeconds(animationLength);
     }
 
-    // Static method to be used in other classes
-    public static IEnumerator WaitForAnimation(string animation, Animator animator)
-    {
-        if (_instance != null)
-        {
-            yield return _instance.StartCoroutine(_instance.WaitForAnimationCoroutine(animation, animator));
-        }
-        else
-        {
-            Debug.LogError("UIGeneralController instance is missing in the scene. Add it to a GameObject.");
-        }
-    }
-
     public static void ToggleUI(CanvasGroup group)
     {
         CanvasGroupController.EnableGroup(group);
@@ -61,6 +48,17 @@ public class UIGeneralController : MonoBehaviour
         {
             Debug.LogError("UIGeneralController instance is missing in the scene. Add it to a GameObject.");
         }
+    }
+    public void CloseUI(CanvasGroup group)
+    {
+        StartCoroutine(WaitForClose(group));
+    }
+
+    private IEnumerator WaitForClose(CanvasGroup group)
+    {
+        yield return StartCoroutine(_instance.WaitForAnimationCoroutine("Close", group.GetComponent<Animator>()));
+
+        CanvasGroupController.DisableGroup(group);
     }
 }
 
