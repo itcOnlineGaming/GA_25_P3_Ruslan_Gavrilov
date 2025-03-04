@@ -49,9 +49,16 @@ public class UIGeneralController : MonoBehaviour
             Debug.LogError("UIGeneralController instance is missing in the scene. Add it to a GameObject.");
         }
     }
-    public void CloseUI(CanvasGroup group)
+    public static void CloseUI(CanvasGroup group)
     {
-        StartCoroutine(WaitForClose(group));
+        if (_instance != null)
+        {
+            _instance.StartCoroutine(_instance.WaitForClose(group));
+        }
+        else
+        {
+            Debug.LogError("UIController instance is missing in the scene!");
+        }
     }
 
     private IEnumerator WaitForClose(CanvasGroup group)
