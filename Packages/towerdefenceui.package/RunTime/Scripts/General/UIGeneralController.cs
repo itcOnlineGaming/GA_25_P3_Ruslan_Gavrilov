@@ -44,10 +44,9 @@ public class UIGeneralController : MonoBehaviour
 
     public static async Task ToggleUI(CanvasGroup group)
     {
-        CanvasGroupController.EnableGroup(group);
-
         if (_instance != null)
         {
+            CanvasGroupController.EnableGroup(group);
             await _instance.WaitForAnimation(group, "Open");
         }
         else
@@ -60,6 +59,7 @@ public class UIGeneralController : MonoBehaviour
         if (_instance != null)
         {
             await _instance.WaitForAnimation(group, "Close");
+            CanvasGroupController.DisableGroup(group);
         }
         else
         {
@@ -70,7 +70,6 @@ public class UIGeneralController : MonoBehaviour
     private async Task WaitForAnimation(CanvasGroup group, string animationName)
     {
         await WaitForAnimationCoroutine(animationName, group.GetComponent<Animator>());
-        CanvasGroupController.DisableGroup(group);
     }
 }
 
