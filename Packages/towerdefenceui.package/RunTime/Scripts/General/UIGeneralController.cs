@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Threading.Tasks;
 
 public class UIGeneralController : MonoBehaviour
 {
@@ -25,35 +26,40 @@ public class UIGeneralController : MonoBehaviour
         Application.Quit();
 #endif
     }
-
-    // Non-static coroutine function
-    private IEnumerator WaitForAnimationCoroutine(string animation, Animator animator)
+    private Task WaitForAnimationCoroutine(string animation, Animator animator)
     {
-        animator.Play(animation);
-        yield return null; // Wait for one frame
+        var tcs = new TaskCompletionSource<bool>();
 
-        float animationLength = animator.GetCurrentAnimatorStateInfo(0).length;
-        yield return new WaitForSeconds(animationLength);
+        _instance.StartCoroutine(AnimationCoroutine(animation, animator, tcs));
+
+        return tcs.Task;
     }
 
-    public static void ToggleUI(CanvasGroup group)
+    private IEnumerator AnimationCoroutine(string animation, Animator animator, TaskCompletionSource<bool> tcs)
+    {
+        animator.Play(animation);
+        yield return new WaitUntil(() => animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1);
+        tcs.SetResult(true);
+    }
+
+    public static async Task ToggleUI(CanvasGroup group)
     {
         CanvasGroupController.EnableGroup(group);
 
         if (_instance != null)
         {
-            _instance.StartCoroutine(_instance.WaitForAnimationCoroutine("Open", group.GetComponent<Animator>()));
+            await _instance.WaitForAnimation(group, "Open");
         }
         else
         {
             Debug.LogError("UIGeneralController instance is missing in the scene. Add it to a GameObject.");
         }
     }
-    public static void CloseUI(CanvasGroup group)
+    public static async Task CloseUI(CanvasGroup group)
     {
         if (_instance != null)
         {
-            _instance.StartCoroutine(_instance.WaitForClose(group));
+            await _instance.WaitForAnimation(group, "Close");
         }
         else
         {
@@ -61,10 +67,9 @@ public class UIGeneralController : MonoBehaviour
         }
     }
 
-    private IEnumerator WaitForClose(CanvasGroup group)
+    private async Task WaitForAnimation(CanvasGroup group, string animationName)
     {
-        yield return StartCoroutine(_instance.WaitForAnimationCoroutine("Close", group.GetComponent<Animator>()));
-
+        await WaitForAnimationCoroutine(animationName, group.GetComponent<Animator>());
         CanvasGroupController.DisableGroup(group);
     }
 }
