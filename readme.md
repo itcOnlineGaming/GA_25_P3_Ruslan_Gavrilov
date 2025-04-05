@@ -5,7 +5,7 @@
 # Set up
 
 You need to add the component to your project by linking through your Manifest.json file in your project. Open the file and add this line :   
-"com.setu.towerdefenceui":"[https://github.com/itcOnlineGaming/GA\_25\_P3\_Ruslan\_Gavrilov.git?path=/Packages/towerdefenceui.package\#1.0.9](https://github.com/itcOnlineGaming/GA_25_P3_Ruslan_Gavrilov.git?path=/Packages/towerdefenceui.package#1.0.9)"
+"com.setu.towerdefenceui":"[https://github.com/itcOnlineGaming/GA\_25\_P3\_Ruslan\_Gavrilov.git?path=/Packages/towerdefenceui.package\#1.0.9](https://github.com/itcOnlineGaming/GA_25_P3_Ruslan_Gavrilov.git?path=/Packages/towerdefenceui.package#1.0.11)"
 
 ### **How To Use the UI Menu System**
 
