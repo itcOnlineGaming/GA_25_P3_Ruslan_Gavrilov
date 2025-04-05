@@ -12,7 +12,7 @@ public class MainMenuUIManager : MonoBehaviour
         Settings,
         QuitGame
     }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    // UI Elements
     public CanvasGroup MainMenuButtons;
     public CanvasGroup ModesMenu;
     public CanvasGroup LevelSelector;
@@ -47,7 +47,6 @@ public class MainMenuUIManager : MonoBehaviour
         CanvasGroupController.DisableGroup(menuDictionary[MenuStage.Settings]);
         CanvasGroupController.DisableGroup(menuDictionary[MenuStage.QuitGame]);
         CanvasGroupController.DisableGroup(menuDictionary[MenuStage.DifficultySelection]);
-
         CanvasGroupController.DisableGroup(loadingScene);
 
         menuStage = MenuStage.MainMenu;
@@ -101,7 +100,7 @@ public class MainMenuUIManager : MonoBehaviour
 
     public void StartGame()
     {
-        //UIGeneralController.LoadScene(loadingScene, "Demo");
+        UIGeneralController.LoadScene(loadingScene, "DemoGame");
     }
 
     public async void BackButton()
