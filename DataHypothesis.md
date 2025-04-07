@@ -16,8 +16,12 @@ The purpose of this is to determine whether the placement of the menu impacts ho
             "timeBetweenClicks": 1.3039628267288208  
         },  
 The key values to look for here are the game version as well as the time it takes to place down the tower. The time is measured by time from the menu open \-\> time at building places. Time greater than 10 seconds is not recorded as the player may have the tower menu Open and not place any buildings.  
-**Version A :** This version has the menu on the opposite side of the screen from the button.  
+
+
 **Version B:** This version has the menu position right beside the button it takes to activate it.
+![Data Image](VersionV.PNG)
+**Version A :** This version has the menu on the opposite side of the screen from the button.  
+![Average Image](versionA.PNG)
 
 ## **Hypothesis**
 
@@ -31,6 +35,8 @@ Game Version A should expect more time between clicks than game version B
 
 ## **Analysis**
 
+These analytics were taken from a small group of people (3-4), the data may be different with a sample size larger so the results here may not be able to be completely proven, but from the data of 2 individuals for game version A and B we can see the following results:
+ 
 From the data collected from in game play testing with different version, we can see that the overall impact of having the menu be far away from the button to activate it ( Version A ), overall takes longer to place down a tower in seconds than Game Version B where the menu is positioned close to the button.
 
 This proves that the time it takes to pace down a tower is longer in terms of seconds, possibly affecting gameplay in terms of efficiency and may lead to missed opportunities in the context of your game.
